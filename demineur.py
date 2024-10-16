@@ -5,52 +5,36 @@
 import random
 
 def main():
-    createEmptyGrid(4, 6, "#")
+    repetition = createEmptyGrid(4, 6, "#")
     print()
-    # createFulledGrid(4, 6, "0", "K", 4)
-    SquareClicked = input("Enter the location of a square: ")
-    revealGrid(6, 6, "#", "0", "K", 6, SquareClicked)
+    for i in range(repetition): 
+        SquareClicked = input("Enter the location of a square: ")
+        revealGrid(4, 6, "#", "0", "K", 6, SquareClicked)
     
 
-def createEmptyGrid(lengthSide, widthSide, hiddenSquare):
-    for width in range(widthSide):
-        for length in range(lengthSide):
+def createEmptyGrid(widthSide, lengthSide, hiddenSquare):
+    for length in range(lengthSide):
+        for width in range(widthSide):
             newList = []
             newList.append(hiddenSquare)
             print(newList, end="")
         print()    
+    repetition = int(widthSide) * int(lengthSide)
+    return repetition
 
-
-def createFulledGrid(lengthSide, widthSide, emptySquare, fullSquare, numberOfBombs):
+def revealGrid(widthSide, lengthSide, hiddenSquare, emptySquare, fullSquare, numberOfBombs, squareClicked):
     randomList = [emptySquare, fullSquare, emptySquare]
+    squareLocationOrd, squareLocationAbs = squareClicked.split(':')
+    ord = int(squareLocationOrd)
+    abs = int(squareLocationAbs)
 
-    for width in range(widthSide):
-        for length in range(lengthSide):
-            newList = []
-            if numberOfBombs == 0:
-                newList.append(emptySquare)   
-            else:    
-                newList.append(random.choice(randomList))
-            for value in newList:
-                if value == randomList[1]:
-                    numberOfBombs -= 1
- 
-            print(newList, end="")
-            
-        print()
-
-
-def revealGrid(lengthSide, widthSide, hiddenSquare, emptySquare, fullSquare, numberOfBombs, squareClicked):
-    randomList = [emptySquare, fullSquare, emptySquare]
-    for width in range(widthSide):
-        for length in range(lengthSide):
+    for length in range(1, lengthSide):
+        for width in range(1, widthSide):
             newList = []
             newList.append(hiddenSquare)
+            if width == abs and length == ord:
+                newList.insert(ord, random.choice(randomList))
             print(newList, end="")
-        newIndex = int(squareClicked)
-        newList.insert(newIndex, random.choice(randomList))
-        print(newList, end="")
-        print() 
-
+        print()
 
 main()
