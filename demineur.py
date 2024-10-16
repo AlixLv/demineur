@@ -5,36 +5,46 @@
 import random
 
 def main():
-    repetition = createEmptyGrid(4, 6, "#")
-    print()
-    for i in range(repetition): 
-        SquareClicked = input("Enter the location of a square: ")
-        revealGrid(4, 6, "#", "0", "K", 6, SquareClicked)
+        revealGrid(3, 5, "#", "0", "K")
+        print()
     
 
 def createEmptyGrid(widthSide, lengthSide, hiddenSquare):
+    newList = []
     for length in range(lengthSide):
         for width in range(widthSide):
-            newList = []
             newList.append(hiddenSquare)
-            print(newList, end="")
+        print(newList, end="")
+        newList = []
         print()    
     repetition = int(widthSide) * int(lengthSide)
     return repetition
 
-def revealGrid(widthSide, lengthSide, hiddenSquare, emptySquare, fullSquare, numberOfBombs, squareClicked):
-    randomList = [emptySquare, fullSquare, emptySquare]
-    squareLocationOrd, squareLocationAbs = squareClicked.split(':')
-    ord = int(squareLocationOrd)
-    abs = int(squareLocationAbs)
 
-    for length in range(1, lengthSide):
-        for width in range(1, widthSide):
-            newList = []
-            newList.append(hiddenSquare)
-            if width == abs and length == ord:
-                newList.insert(ord, random.choice(randomList))
+def revealGrid(widthSide, lengthSide, hiddenSquare, emptySquare, fullSquare):
+    repetition = createEmptyGrid(widthSide, lengthSide, hiddenSquare)
+    randomList = [emptySquare, fullSquare, emptySquare]
+    gridList = []
+    newList = []
+
+
+    for i in range(repetition): 
+        squareClicked = input("Enter the location of a square: ")
+        squareLocationOrd, squareLocationAbs = squareClicked.split(':')
+        ord = int(squareLocationOrd)
+        abs = int(squareLocationAbs)
+
+        for length in range(0, lengthSide):
+            for width in range(0, widthSide):
+                newList.append(hiddenSquare)
+                if width + 1 == abs and length + 1 == ord:
+                    newList.insert(abs, random.choice(randomList))
+                    newList.pop(width)
             print(newList, end="")
-        print()
+            gridList.append(newList)
+            # insérer dans gridList le nouvel élément de la list en cours
+            newList = []
+            print()
+        print("gridList: ", gridList) 
 
 main()
