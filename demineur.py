@@ -10,23 +10,26 @@ def main():
     
 
 def createEmptyGrid(widthSide, lengthSide, hiddenSquare):
+    gridList = []
     newList = []
     for length in range(lengthSide):
         for width in range(widthSide):
             newList.append(hiddenSquare)
         print(newList, end="")
+        gridList.append(newList)
         newList = []
-        print()    
-    repetition = int(widthSide) * int(lengthSide)
-    return repetition
+        print()
+    # print("gird list initiale:", gridList)    
+    
+    return gridList
 
 
 def revealGrid(widthSide, lengthSide, hiddenSquare, emptySquare, fullSquare):
-    repetition = createEmptyGrid(widthSide, lengthSide, hiddenSquare)
+    gridList = createEmptyGrid(widthSide, lengthSide, hiddenSquare)
     randomList = [emptySquare, fullSquare, emptySquare]
-    gridList = []
+    repetition = int(widthSide) * int(lengthSide)
     newList = []
-
+    print("grid list de départ: ", gridList)
 
     for i in range(repetition): 
         squareClicked = input("Enter the location of a square: ")
@@ -39,10 +42,19 @@ def revealGrid(widthSide, lengthSide, hiddenSquare, emptySquare, fullSquare):
                 newList.append(hiddenSquare)
                 if width + 1 == abs and length + 1 == ord:
                     newList.insert(abs, random.choice(randomList))
+                    # print("newList au départ: ", newList)
+                    # print("newList width: ", newList[width])
                     newList.pop(width)
+                    # print("newList après pop: ", newList)
+                    gridList[ord - 1].insert(abs - 1, newList[abs - 1])
+                    # print("girdList ord - 1: ", gridList[ord - 1])
+                    # print("newlist abs - 1: ", newList[abs - 1])
+                    # print("gridList après insert: ", gridList)
+                    gridList[ord - 1].pop(width + 1)
+                    # print("gridList après pop: ", gridList)
             print(newList, end="")
-            gridList.append(newList)
-            # insérer dans gridList le nouvel élément de la list en cours
+
+            
             newList = []
             print()
         print("gridList: ", gridList) 
