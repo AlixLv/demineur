@@ -18,10 +18,21 @@ def createEmptyGrid(widthSide, lengthSide, hiddenSquare):
         print(newList, end="")
         gridList.append(newList)
         newList = []
-        print()
-    # print("gird list initiale:", gridList)    
+        print()  
     
     return gridList
+
+
+def countBombs(grid, square):
+    counterOfBombs = 0
+
+    for sublist in grid:
+        for item in sublist:
+            if item == square:
+                counterOfBombs += 1
+            else:
+                counterOfBombs = counterOfBombs  
+        print("nombre de bombes: ", counterOfBombs)  
 
 
 def revealGrid(widthSide, lengthSide, hiddenSquare, emptySquare, fullSquare):
@@ -29,7 +40,7 @@ def revealGrid(widthSide, lengthSide, hiddenSquare, emptySquare, fullSquare):
     randomList = [emptySquare, fullSquare, emptySquare]
     repetition = int(widthSide) * int(lengthSide)
     newList = []
-    print("grid list de départ: ", gridList)
+    # print("grid list de départ: ", gridList)
 
     for i in range(repetition): 
         squareClicked = input("Enter the location of a square: ")
@@ -42,21 +53,16 @@ def revealGrid(widthSide, lengthSide, hiddenSquare, emptySquare, fullSquare):
                 newList.append(hiddenSquare)
                 if width + 1 == abs and length + 1 == ord:
                     newList.insert(abs, random.choice(randomList))
-                    # print("newList au départ: ", newList)
-                    # print("newList width: ", newList[width])
                     newList.pop(width)
-                    # print("newList après pop: ", newList)
                     gridList[ord - 1].insert(abs - 1, newList[abs - 1])
-                    # print("girdList ord - 1: ", gridList[ord - 1])
-                    # print("newlist abs - 1: ", newList[abs - 1])
-                    # print("gridList après insert: ", gridList)
                     gridList[ord - 1].pop(width + 1)
-                    # print("gridList après pop: ", gridList)
+
             print(newList, end="")
 
-            
             newList = []
             print()
-        print("gridList: ", gridList) 
+        print("gridList: ", gridList)
+    
+        countBombs(gridList, fullSquare) 
 
 main()
