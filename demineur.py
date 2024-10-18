@@ -5,7 +5,7 @@
 import random
 
 def main():
-        revealGrid(3, 5, "#", "0", "K")
+        revealGrid(3, 5, "#", "⬜️", "💣")
         print()
     
 
